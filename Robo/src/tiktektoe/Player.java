@@ -22,6 +22,7 @@ public class Player {
 	static Feld[][] field;
 	static Feld x, o;
 	static int in, h, n, m;
+	static ArrayList<R>
 	static boolean host = false, be = false;
 	static NXTConnection conn;
 
