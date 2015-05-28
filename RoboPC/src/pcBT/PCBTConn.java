@@ -26,7 +26,7 @@ public class PCBTConn {
 		// Get NXTComm Object for I/O
 		NXTComm comm = conn.getNXTComm();
 		sc.useDelimiter(System.getProperty("line.separator"));
-		ByteBuffer buffer = ByteBuffer.allocate(1+Float.BYTES); 
+		byte[] buffer = new byte [1+Float.BYTES];
 		while (true) {
 			try {
 				System.out.print(" Geben Sie die Variable und den neuen Wert ein:");
@@ -39,18 +39,24 @@ public class PCBTConn {
 				else{
 					switch (parts[0]) {
 					case "k":
-						buffer.put(0, (byte) 0);
+						buffer[0] =  (byte) 0;
 						break;
 					case "v":
-						buffer.put(0,(byte)1);break;
+						buffer[0] = (byte)1;
+						break;
 					case "b":
-						buffer.put(0, (byte)2);break;
+						buffer[0] = (byte)2;
+						break;
 					default:
 						System.out.println("Ungueltige Eingabe, Variable muss k, v oder b sein.");
 						continue;
 					}
-					buffer.putFloat(1,Float.parseFloat(parts[1]));
-					comm.write(buffer.array());
+					int i = Float.floatToIntBits(Float.parseFloat(parts[1]));
+					buffer[1] = (byte) (i & 0xFF);
+					buffer[2] = (byte) (i & (0xFF << 8));
+		            buffer[3] = (byte) (i & (0xFF << 16)); 
+		            buffer[4] = (byte) (i & (0xFF << 24));
+					comm.write(buffer);
 					System.out.println("Variable erfoglrich gesetzt.");
 					//byte[] reply = comm.read();
 					//String s = new String(reply);
