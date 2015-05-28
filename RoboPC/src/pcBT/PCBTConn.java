@@ -32,7 +32,7 @@ public class PCBTConn {
 				System.out.print(" Geben Sie die Variable und den neuen Wert ein:");
 				String cmd = sc.next();
 				String[] parts = cmd.split(" ");
-				if(parts.length != 2 || parts[0].length() > 1){
+				if(parts.length != 2){
 					System.out.println("Ungueltige Eingabe");
 					continue;
 				}
@@ -49,7 +49,6 @@ public class PCBTConn {
 						System.out.println("Ungueltige Eingabe, Variable muss k, v oder b sein.");
 						continue;
 					}
-					
 					buffer.putFloat(1,Float.parseFloat(parts[1]));
 					comm.write(buffer.array());
 					System.out.println("Variable erfoglrich gesetzt.");

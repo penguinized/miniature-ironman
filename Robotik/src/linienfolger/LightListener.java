@@ -13,7 +13,8 @@ public class LightListener implements SensorPortListener {
 		System.out.println("hier");
 		e=50-val;
 		double y= (0-KlaLiFo.kp*e);
-		KlaLiFo.p.steer(y);
+		KlaLiFo.mLinks.setSpeed((float) (0-KlaLiFo.kp*e));
+		KlaLiFo.mRechts.setSpeed((float) (0-KlaLiFo.kp*e));
 //		System.out.println(aNewValue);
 //		System.out.println(KlaLiFo.ls.getLightValue());
 		System.out.println(y);System.out.println(e);
