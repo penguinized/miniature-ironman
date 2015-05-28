@@ -1,7 +1,6 @@
 package pcBT;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.Scanner;
 
 import lejos.pc.comm.*;
@@ -29,11 +28,11 @@ public class PCBTConn {
 		byte[] buffer = new byte [1+Float.BYTES];
 		while (true) {
 			try {
-				System.out.print(" Geben Sie die Variable und den neuen Wert ein:");
+				System.out.print(" Geben Sie die Variable und den neuen Wert ein: ");
 				String cmd = sc.next();
 				String[] parts = cmd.split(" ");
 				if(parts.length != 2){
-					System.out.println("Ungueltige Eingabe");
+					System.out.println("Ungueltige Eingabe, Variable muss k, v oder b sein.");
 					continue;
 				}
 				else{
@@ -52,12 +51,12 @@ public class PCBTConn {
 						continue;
 					}
 					int i = Float.floatToIntBits(Float.parseFloat(parts[1]));
-					buffer[1] = (byte) (i & 0xFF);
-					buffer[2] = (byte) (i & (0xFF << 8));
-		            buffer[3] = (byte) (i & (0xFF << 16)); 
-		            buffer[4] = (byte) (i & (0xFF << 24));
+		            buffer[1] = (byte)(i & 0xff);
+		    		buffer[2] = (byte)((i >>> 8) & 0xff);
+		    	    buffer[3] = (byte)((i >>> 16) & 0xff);
+		    	    buffer[4] = (byte)((i >>> 24) & 0xff);
 					comm.write(buffer);
-					System.out.println("Variable erfoglrich gesetzt.");
+					System.out.println("Variable erfoglreich gesendet.");
 					//byte[] reply = comm.read();
 					//String s = new String(reply);
 					//System.out.println(s);
